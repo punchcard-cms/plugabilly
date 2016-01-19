@@ -18,6 +18,13 @@ test('file: upper directory', t => {
   t.same(file, expected);
 });
 
+test('file: not found', t => {
+  var file = find.file('_foo.bar');
+  var expected = null;
+
+  t.same(file, expected);
+});
+
 test('directory: current directory', t => {
   var dir = find.dirFromFile('find.js');
   var expected = path.join(process.cwd());
