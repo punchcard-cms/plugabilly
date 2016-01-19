@@ -3,10 +3,10 @@
 const meta = require('./lib/meta');
 const find = require('./lib/find');
 
+var file = find.file('gulpfile.js');
+
 meta().then(modules => {
   console.log(modules);
 });
 
-// var file = find.file('gulpfile.js');
-
-// console.log(file);
+console.log(file);

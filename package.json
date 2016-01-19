@@ -4,6 +4,7 @@
   "description": "Dynamic plugin loader",
   "main": "index.js",
   "scripts": {
+    "pretest": "eslint index.js lib/**",
     "test": "nyc --reporter=lcov ava --tap --fail-fast tests | tap-diff",
     "coveralls": "cat ./coverage/lcov.info | coveralls"
   },
@@ -25,6 +26,7 @@
     "ava": "^0.10.0",
     "coveralls": "^2.11.6",
     "eslint": "^1.10.3",
+    "eslint-config-xo-space": "^0.8.0",
     "nyc": "^5.3.0",
     "tap-diff": "^0.1.1"
   }
