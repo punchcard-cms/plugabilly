@@ -1,0 +1,28 @@
+{
+  "name": "plugabilly",
+  "version": "0.0.0",
+  "description": "Dynamic plugin loader",
+  "main": "index.js",
+  "scripts": {
+    "test": "ava --tap --fail-fast tests | tap-diff"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git@github.com:Snugug/plugabilly.git"
+  },
+  "keywords": [
+    "plugin",
+    "load"
+  ],
+  "author": "Sam Richard <snugug@us.ibm.com>",
+  "license": "MIT",
+  "dependencies": {
+    "bluebird": "^3.1.1",
+    "glob": "^6.0.4"
+  },
+  "devDependencies": {
+    "ava": "^0.10.0",
+    "eslint": "^1.10.3",
+    "tap-diff": "^0.1.1"
+  }
+}
