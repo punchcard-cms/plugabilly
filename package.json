@@ -4,7 +4,6 @@
   "description": "Dynamic plugin loader",
   "main": "index.js",
   "scripts": {
-    "pretest": "eslint index.js lib/**",
     "test": "nyc --reporter=lcov ava --tap --fail-fast tests | tap-diff",
     "coveralls": "cat ./coverage/lcov.info | coveralls"
   },
