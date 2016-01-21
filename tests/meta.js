@@ -6,7 +6,7 @@ import process from 'child_process';
 import Promise from 'bluebird';
 
 test('get packages', t => {
-  return meta('..').then(modules => {
+  return meta().then(modules => {
     var exec = Promise.promisify(process.exec);
     return exec('npm ls --json --depth=0 --long').then(function (stdout) {
       var expected = JSON.parse(stdout);
