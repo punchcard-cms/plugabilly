@@ -19,12 +19,9 @@
   ],
   "author": "Sam Richard <snugug@us.ibm.com>",
   "license": "MIT",
-  "dependencies": {
-    "bluebird": "^3.1.1",
-    "glob": "^6.0.4"
-  },
   "devDependencies": {
     "ava": "^0.10.0",
+    "bluebird": "^3.1.5",
     "coveralls": "^2.11.6",
     "eslint": "^1.10.3",
     "eslint-config-xo-space": "^0.8.0",
