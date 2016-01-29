@@ -6,8 +6,8 @@
   "scripts": {
     "test": "nyc ava --tap --fail-fast tests | tap-diff",
     "coveralls": "nyc report --reporter=text-lcov | coveralls",
-    "posttest": "npm run jsdoc",
-    "jsdoc": "jsdoc -c .jsdoc.json"
+    "posttest": "npm run docco",
+    "docco": "docco -c src/docco.css -t src/docco.jst index.js lib/*.js && cp ./pugabilly.svg ./docs/pugabilly.svg"
   },
   "repository": {
     "type": "git",
@@ -23,9 +23,9 @@
     "ava": "^0.10.0",
     "bluebird": "^3.1.5",
     "coveralls": "^2.11.6",
+    "docco": "^0.7.0",
     "eslint": "^1.10.3",
     "eslint-config-xo-space": "^0.8.0",
-    "jsdoc": "^3.4.0",
     "nyc": "^5.3.0",
     "tap-diff": "^0.1.1"
   }
