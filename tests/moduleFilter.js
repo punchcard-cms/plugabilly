@@ -20,14 +20,14 @@ test('containsSync - Array', t => {
 });
 
 test('contains - String', t => {
-  new ModuleFilter(modules, 'name').contains('over').then(results => {
+  return new ModuleFilter(modules, 'name').contains('over').then(results => {
     t.is(Object.keys(results).length, 1);
     t.same(Object.keys(results), ['coveralls']);
   });
 });
 
 test('contains - Array', t => {
-  new ModuleFilter(modules, 'keywords').contains('test').then(results => {
+  return new ModuleFilter(modules, 'keywords').contains('test').then(results => {
     t.is(Object.keys(results).length, 2);
     t.same(Object.keys(results), ['ava', 'tap-diff']);
   });
@@ -49,14 +49,14 @@ test('doesNotContainSync - Array', t => {
 });
 
 test('doesNotContain - String', t => {
-  new ModuleFilter(modules, 'name').doesNotContain('over').then(results => {
+  return new ModuleFilter(modules, 'name').doesNotContain('over').then(results => {
     t.is(Object.keys(results).length, 7);
     t.same(Object.keys(results), ['ava', 'bluebird', 'eslint', '__unrequireable', 'eslint-config-xo-space', 'nyc', 'tap-diff']);
   });
 });
 
 test('doesNotContain - Array', t => {
-  new ModuleFilter(modules, 'keywords').doesNotContain('test').then(results => {
+  return new ModuleFilter(modules, 'keywords').doesNotContain('test').then(results => {
     t.is(Object.keys(results).length, 6);
     t.same(Object.keys(results), ['bluebird', 'coveralls', 'eslint', '__unrequireable', 'eslint-config-xo-space', 'nyc']);
   });
@@ -84,21 +84,21 @@ test('isSync - String (found, unrequireable)', t => {
 });
 
 test('is - String (not found)', t => {
-  new ModuleFilter(modules, 'name').is('over').then(results => {
+  return new ModuleFilter(modules, 'name').is('over').then(results => {
     t.is(Object.keys(results).length, 0);
     t.same(Object.keys(results), []);
   });
 });
 
 test('is - String (found)', t => {
-  new ModuleFilter(modules, 'name').is('coveralls').then(results => {
+  return new ModuleFilter(modules, 'name').is('coveralls').then(results => {
     t.is(Object.keys(results).length, 1);
     t.same(Object.keys(results), ['coveralls']);
   });
 });
 
 test('is - String (found, unrequireable)', t => {
-  new ModuleFilter(modules, 'name').is('jsdoc').then(results => {
+  return new ModuleFilter(modules, 'name').is('jsdoc').then(results => {
     t.is(Object.keys(results).length, 1);
     t.same(Object.keys(results), ['__unrequireable']);
     t.same(results.__unrequireable, ['jsdoc']);
@@ -128,21 +128,21 @@ test('isNotSync - String (found, unrequireable)', t => {
 });
 
 test('isNot - String (not found)', t => {
-  new ModuleFilter(modules, 'name').isNot('over').then(results => {
+  return new ModuleFilter(modules, 'name').isNot('over').then(results => {
     t.is(Object.keys(results).length, 8);
     t.same(Object.keys(results), ['ava', 'bluebird', 'coveralls', 'eslint', '__unrequireable', 'eslint-config-xo-space', 'nyc', 'tap-diff']);
   });
 });
 
 test('isNot - String (found)', t => {
-  new ModuleFilter(modules, 'name').isNot('coveralls').then(results => {
+  return new ModuleFilter(modules, 'name').isNot('coveralls').then(results => {
     t.is(Object.keys(results).length, 7);
     t.same(Object.keys(results), ['ava', 'bluebird', 'eslint', '__unrequireable', 'eslint-config-xo-space', 'nyc', 'tap-diff']);
   });
 });
 
 test('isNot - String (found, unrequireable)', t => {
-  new ModuleFilter(modules, 'name').isNot('jsdoc').then(results => {
+  return new ModuleFilter(modules, 'name').isNot('jsdoc').then(results => {
     t.is(Object.keys(results).length, 7);
     t.same(Object.keys(results), ['ava', 'bluebird', 'coveralls', 'eslint', 'eslint-config-xo-space', 'nyc', 'tap-diff']);
   });
