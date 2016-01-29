@@ -4,8 +4,8 @@
   "description": "Dynamic plugin loader",
   "main": "index.js",
   "scripts": {
-    "test": "nyc --reporter=lcov ava --tap --fail-fast tests | tap-diff",
-    "coveralls": "cat ./coverage/lcov.info | coveralls",
+    "test": "nyc ava --tap --fail-fast tests | tap-diff",
+    "coveralls": "nyc report --reporter=text-lcov | coveralls",
     "posttest": "npm run jsdoc",
     "jsdoc": "jsdoc -c .jsdoc.json"
   },
