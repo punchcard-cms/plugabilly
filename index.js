@@ -1,12 +1,37 @@
 'use strict';
 
 const meta = require('./lib/meta');
-const find = require('./lib/find');
+const ModuleFilter = require('./lib/filter');
 
-var file = find.file('gulpfile.js');
+function plugabilly() {
+  var _modules = meta();
 
-meta().then(modules => {
-  console.log(modules);
-});
+  var plug = {
+    modules: _modules
+  }
 
-console.log(file);
+  /**
+    * Keyword
+  **/
+  plug.keyword = () => {
+    return new ModuleFilter(_modules, 'keywords');
+  }
+
+  /**
+    * Name
+  **/
+  plug.name = () => {
+    return new ModuleFilter(_modules, 'name');
+  }
+
+  /**
+    * Attribute
+  **/
+  plug.attribute = (attr) => {
+    return new ModuleFilter(_modules, attr);
+  }
+
+  return plug;
+}
+
+module.exports = plugabilly;
