@@ -13,7 +13,7 @@ function plugabilly() {
   /**
     * Keyword
   **/
-  plug.keyword = () => {
+  plug.keywords = () => {
     return new ModuleFilter(_modules, 'keywords');
   }
 
