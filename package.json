@@ -1,6 +1,6 @@
 {
   "name": "plugabilly",
-  "version": "0.0.0",
+  "version": "0.0.1",
   "description": "Dynamic plugin loader",
   "main": "index.js",
   "scripts": {
