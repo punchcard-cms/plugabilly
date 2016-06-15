@@ -6,7 +6,6 @@
   "scripts": {
     "test": "nyc ava --tap --fail-fast tests | tap-diff",
     "coveralls": "nyc report --reporter=text-lcov | coveralls",
-    "posttest": "npm run jsdoc",
     "jsdoc": "jsdoc -c .jsdoc.json"
   },
   "repository": {
