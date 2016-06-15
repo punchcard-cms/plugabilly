@@ -3,8 +3,8 @@
 const meta = require('./lib/meta');
 const ModuleFilter = require('./lib/filter');
 
-function plugabilly() {
-  var _modules = meta();
+function plugabilly(config) {
+  var _modules = meta(config);
 
   var plug = {
     modules: _modules
