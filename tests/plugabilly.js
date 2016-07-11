@@ -9,15 +9,15 @@ const plugins = plugabilly();
 // Keywords
 //////////////////////////////
 test('keywords (Sync)', t => {
-  var results = plugins.keywords().containsSync('test');
+  var results = plugins.keywords().containsSync('runner');
   t.is(Object.keys(results).length, 2);
-  t.same(Object.keys(results), ['ava', 'tap-diff']);
+  t.same(Object.keys(results), ['ava', 'ava-init']);
 });
 
 test('keywords (Async)', t => {
-  return plugins.keywords().contains('test', results => {
+  return plugins.keywords().contains('runner', results => {
     t.is(Object.keys(results).length, 2);
-    t.same(Object.keys(results), ['ava', 'tap-diff']);
+    t.same(Object.keys(results), ['ava', 'ava-init']);
   });
 });
 
