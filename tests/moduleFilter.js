@@ -69,26 +69,26 @@ test('contains - Array', t => {
 //////////////////////////////
 // Does Not Contain
 //////////////////////////////
-test('doesNotContainSync - String', t => {
+test.skip('doesNotContainSync - String', t => {
   var results = new ModuleFilter(modules, 'name').doesNotContainSync('over');
   t.is(Object.keys(results).length, 7);
   t.is(Object.keys(results), ['ava', 'bluebird', 'eslint', '__unrequireable', 'eslint-config-xo-space', 'nyc', 'tap-diff']);
 });
 
-test('doesNotContainSync - Array', t => {
+test.skip('doesNotContainSync - Array', t => {
   var results = new ModuleFilter(modules, 'keywords').doesNotContainSync('test');
   t.is(Object.keys(results).length, 6);
   t.is(Object.keys(results), ['bluebird', 'coveralls', 'eslint', '__unrequireable', 'eslint-config-xo-space', 'nyc']);
 });
 
-test('doesNotContain - String', t => {
+test.skip('doesNotContain - String', t => {
   return new ModuleFilter(modules, 'name').doesNotContain('over').then(results => {
     t.is(Object.keys(results).length, 7);
     t.is(Object.keys(results), ['ava', 'bluebird', 'eslint', '__unrequireable', 'eslint-config-xo-space', 'nyc', 'tap-diff']);
   });
 });
 
-test('doesNotContain - Array', t => {
+test.skip('doesNotContain - Array', t => {
   return new ModuleFilter(modules, 'keywords').doesNotContain('test').then(results => {
     t.is(Object.keys(results).length, 6);
     t.is(Object.keys(results), ['bluebird', 'coveralls', 'eslint', '__unrequireable', 'eslint-config-xo-space', 'nyc']);
@@ -98,39 +98,39 @@ test('doesNotContain - Array', t => {
 //////////////////////////////
 // Is Equal To
 //////////////////////////////
-test('isSync - String (not found)', t => {
+test.skip('isSync - String (not found)', t => {
   var results = new ModuleFilter(modules, 'name').isSync('over');
   t.is(Object.keys(results).length, 0);
   t.is(Object.keys(results), []);
 });
 
-test('isSync - String (found)', t => {
+test.skip('isSync - String (found)', t => {
   var results = new ModuleFilter(modules, 'name').isSync('coveralls');
   t.is(Object.keys(results).length, 1);
   t.is(Object.keys(results), ['coveralls']);
 });
 
-test('isSync - String (found, unrequireable)', t => {
+test.skip('isSync - String (found, unrequireable)', t => {
   var results = new ModuleFilter(modules, 'name').isSync('jsdoc');
   t.is(Object.keys(results).length, 1);
   t.is(Object.keys(results), ['__unrequireable']);
 });
 
-test('is - String (not found)', t => {
+test.skip('is - String (not found)', t => {
   return new ModuleFilter(modules, 'name').is('over').then(results => {
     t.is(Object.keys(results).length, 0);
     t.is(Object.keys(results), []);
   });
 });
 
-test('is - String (found)', t => {
+test.skip('is - String (found)', t => {
   return new ModuleFilter(modules, 'name').is('coveralls').then(results => {
     t.is(Object.keys(results).length, 1);
     t.is(Object.keys(results), ['coveralls']);
   });
 });
 
-test('is - String (found, unrequireable)', t => {
+test.skip('is - String (found, unrequireable)', t => {
   return new ModuleFilter(modules, 'name').is('jsdoc').then(results => {
     t.is(Object.keys(results).length, 1);
     t.is(Object.keys(results), ['__unrequireable']);
@@ -141,40 +141,40 @@ test('is - String (found, unrequireable)', t => {
 //////////////////////////////
 // Is Not Equal To
 //////////////////////////////
-test('isNotSync - String (not found)', t => {
+test.skip('isNotSync - String (not found)', t => {
   var results = new ModuleFilter(modules, 'name').isNotSync('over');
   t.is(Object.keys(results).length, 8);
   t.is(Object.keys(results), ['ava', 'bluebird', 'coveralls', 'eslint', '__unrequireable', 'eslint-config-xo-space', 'nyc', 'tap-diff']);
 });
 
-test('isNotSync - String (found)', t => {
+test.skip('isNotSync - String (found)', t => {
   var results = new ModuleFilter(modules, 'name').isNotSync('coveralls');
   t.is(Object.keys(results).length, 7);
   t.is(Object.keys(results).length, 7);
   t.is(Object.keys(results), ['ava', 'bluebird', 'eslint', '__unrequireable', 'eslint-config-xo-space', 'nyc', 'tap-diff']);
 });
 
-test('isNotSync - String (found, unrequireable)', t => {
+test.skip('isNotSync - String (found, unrequireable)', t => {
   var results = new ModuleFilter(modules, 'name').isNotSync('jsdoc');
   t.is(Object.keys(results).length, 7);
   t.is(Object.keys(results), ['ava', 'bluebird', 'coveralls', 'eslint', 'eslint-config-xo-space', 'nyc', 'tap-diff']);
 });
 
-test('isNot - String (not found)', t => {
+test.skip('isNot - String (not found)', t => {
   return new ModuleFilter(modules, 'name').isNot('over').then(results => {
     t.is(Object.keys(results).length, 8);
     t.is(Object.keys(results), ['ava', 'bluebird', 'coveralls', 'eslint', '__unrequireable', 'eslint-config-xo-space', 'nyc', 'tap-diff']);
   });
 });
 
-test('isNot - String (found)', t => {
+test.skip('isNot - String (found)', t => {
   return new ModuleFilter(modules, 'name').isNot('coveralls').then(results => {
     t.is(Object.keys(results).length, 7);
     t.is(Object.keys(results), ['ava', 'bluebird', 'eslint', '__unrequireable', 'eslint-config-xo-space', 'nyc', 'tap-diff']);
   });
 });
 
-test('isNot - String (found, unrequireable)', t => {
+test.skip('isNot - String (found, unrequireable)', t => {
   return new ModuleFilter(modules, 'name').isNot('jsdoc').then(results => {
     t.is(Object.keys(results).length, 7);
     t.is(Object.keys(results), ['ava', 'bluebird', 'coveralls', 'eslint', 'eslint-config-xo-space', 'nyc', 'tap-diff']);
