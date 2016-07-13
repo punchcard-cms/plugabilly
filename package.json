@@ -4,7 +4,7 @@
   "description": "Dynamic plugin loader",
   "main": "index.js",
   "scripts": {
-    "test": "nyc ava --tap --fail-fast tests | tap-diff",
+    "test": "nyc ava --tap --fail-fast tests/meta.js | tap-diff",
     "coveralls": "nyc report --reporter=text-lcov | coveralls",
     "jsdoc": "jsdoc -c .jsdoc.json"
   },
