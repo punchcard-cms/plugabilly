@@ -5,7 +5,7 @@
   "scripts": {
     "pretest": "npm run lint",
     "test": "npm run nyc",
-    "coveralls": "nyc report --reporter=text-lcov | coveralls",
+    "coverage": "nyc report --reporter=text-lcov | coveralls",
     "ava": "ava | tap-diff",
     "nyc": "nyc --all npm run ava",
     "lint": "eslint index.js lib && eslint -c ./.eslintrc-ava.yml tests",
