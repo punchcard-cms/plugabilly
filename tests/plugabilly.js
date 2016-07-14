@@ -1,5 +1,3 @@
-'use strict';
-
 import test from 'ava';
 import plugabilly from '../index';
 
@@ -9,7 +7,7 @@ const plugins = plugabilly();
 // Keywords
 //////////////////////////////
 test('keywords (Sync)', t => {
-  var results = plugins.keywords().containsSync('runner');
+  const results = plugins.keywords().containsSync('runner');
   t.is(Object.keys(results).length, 2);
   t.same(Object.keys(results), ['ava', 'ava-init']);
 });
@@ -26,7 +24,7 @@ test('keywords (Async)', t => {
 // Keywords
 //////////////////////////////
 test('name (Sync)', t => {
-  var results = plugins.name().containsSync('over');
+  const results = plugins.name().containsSync('over');
   t.is(Object.keys(results).length, 1);
   t.same(Object.keys(results), ['coveralls']);
 });
@@ -43,7 +41,7 @@ test('name (Async)', t => {
 // Attribute
 //////////////////////////////
 test('attribute, known (Sync)', t => {
-  var results = plugins.attribute('name').containsSync('over');
+  const results = plugins.attribute('name').containsSync('over');
   t.is(Object.keys(results).length, 1);
   t.same(Object.keys(results), ['coveralls']);
 });
@@ -56,7 +54,7 @@ test('attribute, known (Async)', t => {
 });
 
 test('attribute, unknown (Sync)', t => {
-  var results = plugins.attribute('foo').containsSync('over');
+  const results = plugins.attribute('foo').containsSync('over');
   t.is(Object.keys(results).length, 0);
   t.same(Object.keys(results), []);
 });
