@@ -1,17 +1,19 @@
 language: node_js
 node_js:
+  - v6
   - v5
   - v4
-before_install: npm install -g npm@3.5.3
+
+
 after_success: npm run coveralls
 
 branches:
   except:
     - gh-pages
 
-deploy:
-  skip_cleanup: true
-  provider: script
-  script: sh ./.deploy.sh
-  on:
-    branch: master
+# deploy:
+#   skip_cleanup: true
+#   provider: script
+#   script: sh ./.deploy.sh
+#   on:
+#     branch: master
