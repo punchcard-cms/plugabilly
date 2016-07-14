@@ -2,7 +2,7 @@
   "name": "module-a",
   "version": "0.0.1",
   "description": "Module A",
-  "main": "index.js",
+  "main": "app.js",
   "keywords": [
     "plugabilly-test"
   ],
