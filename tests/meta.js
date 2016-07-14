@@ -1,36 +1,59 @@
 import test from 'ava';
 import path from 'path';
 import _ from 'lodash';
+import fs from 'fs';
+
 import meta from '../lib/meta';
-import process from 'child_process';
-import Promise from 'bluebird';
+import expected from './_modules';
 
-
-// test skipped - needs to be upgraded to work with current npm flat install structure
-test.skip('get packages', t => {
+test('get packages - no locals', t => {
   const modules = meta();
-  const exec = Promise.promisify(process.exec);
 
-  return exec('npm ls --json --depth=0 --long').then(stdout => {
-    const expected = JSON.parse(stdout);
+  t.deepEqual(modules, expected, 'All node modules included');
 
-    // Same number of items returned as are available at to-level node
-    t.same(modules.length, Object.keys(expected.dependencies).length);
-
-    // Each module has path, package, and package's name
-    modules.forEach(module => {
-      t.true(module.hasOwnProperty('path'));
-      t.true(module.hasOwnProperty('package'));
-      t.true(module.package.hasOwnProperty('name'));
-    });
+  // Each module has path, package, and package's name
+  modules.forEach(module => {
+    t.true(module.hasOwnProperty('path'));
+    t.true(module.hasOwnProperty('package'));
+    t.true(module.package.hasOwnProperty('name'));
   });
 });
 
-test('get packages', t => {
-  const modules = meta({ search: [path.join(__dirname, './fixtures/modules')] });
+test('get packages - locals', t => {
+  const localPath = path.join(__dirname, 'fixtures', 'modules');
+  const modules = meta({ search: [localPath] });
+
   const modA = path.join(__dirname, './fixtures/modules', 'module-a');
   const modB = path.join(__dirname, './fixtures/modules', 'module-b');
   const modC = path.join(__dirname, './fixtures/modules', 'module-c');
+
+  const locals = fs.readdirSync(localPath).filter(module => {
+    if (module.charAt(0) === '.') {
+      return false;
+    }
+
+    try {
+      fs.statSync(path.join(__dirname, 'fixtures', 'modules', module, 'package.json'));
+
+      return true;
+    }
+    catch (e) {
+      return false;
+    }
+  }).map(module => {
+    const pth = path.join(__dirname, 'fixtures', 'modules', module);
+
+    // Disabling require linter to allow us to require the package file
+    return {
+      path: pth,
+      package: require(path.join(pth, 'package.json')), // eslint-disable-line global-require
+    };
+  });
+
+  const expectedWithLocals = _.cloneDeep(expected).concat(locals);
+
+  // Same number of modules
+  t.is(modules.length, expectedWithLocals.length, 'All node modules and local modules included');
 
   // Each module has path, package, and package's name
   modules.forEach(module => {

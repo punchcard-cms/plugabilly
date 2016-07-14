@@ -1,8 +1,10 @@
 import test from 'ava';
 import path from 'path';
+import _ from 'lodash';
+
 import ModuleFilter from '../lib/filter';
 import meta from '../lib/meta';
-import _ from 'lodash';
+import nodeModules from './_modules';
 
 // import modules from './_modules';
 
@@ -39,9 +41,9 @@ test('contains - Array', t => {
 });
 
 test('containsSync - String', t => {
-  const results = new ModuleFilter(modulesLocal, 'name').containsSync('dule-c');
+  const results = new ModuleFilter(modulesLocal, 'name').containsSync('dule-a');
   t.is(Object.keys(results).length, 1);
-  t.true(_.isEqual(Object.keys(results).sort(), ['module-c'].sort()));
+  t.true(_.isEqual(Object.keys(results).sort(), ['module-a'].sort()));
 });
 
 test('containsSync - Array', t => {
@@ -67,114 +69,335 @@ test('contains - Array', t => {
 //////////////////////////////
 // Does Not Contain
 //////////////////////////////
-// test.skip('doesNotContainSync - String', t => {
-//   const results = new ModuleFilter(modules, 'name').doesNotContainSync('over');
-//   t.is(Object.keys(results).length, 7);
-//   t.is(Object.keys(results), ['ava', 'bluebird', 'eslint', '__unrequireable', 'eslint-config-xo-space', 'nyc', 'tap-diff']);
-// });
+test('doesNotContainSync - String', t => {
+  const results = new ModuleFilter(modules, 'name').doesNotContainSync('babel');
 
-// test.skip('doesNotContainSync - Array', t => {
-//   const results = new ModuleFilter(modules, 'keywords').doesNotContainSync('test');
-//   t.is(Object.keys(results).length, 6);
-//   t.is(Object.keys(results), ['bluebird', 'coveralls', 'eslint', '__unrequireable', 'eslint-config-xo-space', 'nyc']);
-// });
+  const expected = nodeModules.filter(module => {
+    if (_.get(module, 'package.name', '').indexOf('babel') < 0) {
+      return true;
+    }
 
-// test.skip('doesNotContain - String', t => {
-//   return new ModuleFilter(modules, 'name').doesNotContain('over').then(results => {
-//     t.is(Object.keys(results).length, 7);
-//     t.is(Object.keys(results), ['ava', 'bluebird', 'eslint', '__unrequireable', 'eslint-config-xo-space', 'nyc', 'tap-diff']);
-//   });
-// });
+    return false;
+  }).map(module => {
+    return module.package.name;
+  }).sort();
 
-// test.skip('doesNotContain - Array', t => {
-//   return new ModuleFilter(modules, 'keywords').doesNotContain('test').then(results => {
-//     t.is(Object.keys(results).length, 6);
-//     t.is(Object.keys(results), ['bluebird', 'coveralls', 'eslint', '__unrequireable', 'eslint-config-xo-space', 'nyc']);
-//   });
-// });
+  let item = _.pull(Object.keys(results), '__unrequireable');
+  if (results.__unrequireable) {
+    item = item.concat(results.__unrequireable).sort();
+  }
+  const values = _.isEqual(item, expected);
 
-// //////////////////////////////
-// // Is Equal To
-// //////////////////////////////
-// test.skip('isSync - String (not found)', t => {
-//   const results = new ModuleFilter(modules, 'name').isSync('over');
-//   t.is(Object.keys(results).length, 0);
-//   t.is(Object.keys(results), []);
-// });
+  t.true(values, 'Expected results are the same');
+});
 
-// test.skip('isSync - String (found)', t => {
-//   const results = new ModuleFilter(modules, 'name').isSync('coveralls');
-//   t.is(Object.keys(results).length, 1);
-//   t.is(Object.keys(results), ['coveralls']);
-// });
+test('doesNotContainSync - Array', t => {
+  const results = new ModuleFilter(modules, 'keywords').doesNotContainSync('test');
+  const expected = nodeModules.filter(module => {
+    if (_.get(module, 'package.keywords', '').indexOf('test') < 0) {
+      return true;
+    }
 
-// test.skip('isSync - String (found, unrequireable)', t => {
-//   const results = new ModuleFilter(modules, 'name').isSync('jsdoc');
-//   t.is(Object.keys(results).length, 1);
-//   t.is(Object.keys(results), ['__unrequireable']);
-// });
+    return false;
+  }).map(module => {
+    return module.package.name;
+  }).sort();
 
-// test.skip('is - String (not found)', t => {
-//   return new ModuleFilter(modules, 'name').is('over').then(results => {
-//     t.is(Object.keys(results).length, 0);
-//     t.is(Object.keys(results), []);
-//   });
-// });
+  let item = _.pull(Object.keys(results), '__unrequireable');
+  if (results.__unrequireable) {
+    item = item.concat(results.__unrequireable).sort();
+  }
+  const values = _.isEqual(item, expected);
 
-// test.skip('is - String (found)', t => {
-//   return new ModuleFilter(modules, 'name').is('coveralls').then(results => {
-//     t.is(Object.keys(results).length, 1);
-//     t.is(Object.keys(results), ['coveralls']);
-//   });
-// });
+  t.true(values, 'Expected results are the same');
+});
 
-// test.skip('is - String (found, unrequireable)', t => {
-//   return new ModuleFilter(modules, 'name').is('jsdoc').then(results => {
-//     t.is(Object.keys(results).length, 1);
-//     t.is(Object.keys(results), ['__unrequireable']);
-//     t.is(results.__unrequireable, ['jsdoc']);
-//   });
-// });
+test('doesNotContain - String', t => {
+  return new ModuleFilter(modules, 'name').doesNotContain('babel').then(results => {
+    const expected = nodeModules.filter(module => {
+      if (_.get(module, 'package.name', '').indexOf('babel') < 0) {
+        return true;
+      }
+
+      return false;
+    }).map(module => {
+      return module.package.name;
+    }).sort();
+
+    let item = _.pull(Object.keys(results), '__unrequireable');
+    if (results.__unrequireable) {
+      item = item.concat(results.__unrequireable).sort();
+    }
+    const values = _.isEqual(item, expected);
+
+    t.true(values, 'Expected results are the same');
+  });
+});
+
+test('doesNotContain - Array', t => {
+  return new ModuleFilter(modules, 'keywords').doesNotContain('test').then(results => {
+    const expected = nodeModules.filter(module => {
+      if (_.get(module, 'package.keywords', '').indexOf('test') < 0) {
+        return true;
+      }
+
+      return false;
+    }).map(module => {
+      return module.package.name;
+    }).sort();
+
+    let item = _.pull(Object.keys(results), '__unrequireable');
+    if (results.__unrequireable) {
+      item = item.concat(results.__unrequireable).sort();
+    }
+    const values = _.isEqual(item, expected);
+
+    t.true(values, 'Expected results are the same');
+  });
+});
+
+//////////////////////////////
+// Is Equal To
+//////////////////////////////
+test('isSync - String (not found)', t => {
+  const results = new ModuleFilter(modules, 'name').isSync('foo-bar-baz');
+
+  const expected = nodeModules.filter(module => {
+    if (_.get(module, 'package.name', '') === 'foo-bar-baz') {
+      return true;
+    }
+
+    return false;
+  }).map(module => {
+    return module.package.name;
+  }).sort();
+
+  let item = _.pull(Object.keys(results), '__unrequireable');
+  if (results.__unrequireable) {
+    item = item.concat(results.__unrequireable).sort();
+  }
+  const values = _.isEqual(item, expected);
+
+  t.true(values, 'Expected results are the same');
+});
+
+test('isSync - String (found)', t => {
+  const results = new ModuleFilter(modules, 'name').isSync('coveralls');
+
+  const expected = nodeModules.filter(module => {
+    if (_.get(module, 'package.name', '') === 'coveralls') {
+      return true;
+    }
+
+    return false;
+  }).map(module => {
+    return module.package.name;
+  }).sort();
+
+  let item = _.pull(Object.keys(results), '__unrequireable');
+  if (results.__unrequireable) {
+    item = item.concat(results.__unrequireable).sort();
+  }
+  const values = _.isEqual(item, expected);
+
+  t.true(values, 'Expected results are the same');
+});
+
+test('isSync - String (found, unrequireable)', t => {
+  const results = new ModuleFilter(modules, 'name').isSync('jsdoc');
+
+  const expected = nodeModules.filter(module => {
+    if (_.get(module, 'package.name', '') === 'jsdoc') {
+      return true;
+    }
+
+    return false;
+  }).map(module => {
+    return module.package.name;
+  }).sort();
+
+  const values = _.isEqual(results.__unrequireable, expected);
+
+  t.true(Object.keys(results).length === 1, 'Only unrequireable modules');
+  t.true(values, 'Expected results are the same');
+});
+
+test('is - String (not found)', t => {
+  return new ModuleFilter(modules, 'name').is('foo-bar-baz').then(results => {
+    const expected = nodeModules.filter(module => {
+      if (_.get(module, 'package.name', '') === 'foo-bar-baz') {
+        return true;
+      }
+
+      return false;
+    }).map(module => {
+      return module.package.name;
+    }).sort();
+
+    let item = _.pull(Object.keys(results), '__unrequireable');
+    if (results.__unrequireable) {
+      item = item.concat(results.__unrequireable).sort();
+    }
+    const values = _.isEqual(item, expected);
+
+    t.true(values, 'Expected results are the same');
+  });
+});
+
+test('is - String (found)', t => {
+  return new ModuleFilter(modules, 'name').is('coveralls').then(results => {
+    const expected = nodeModules.filter(module => {
+      if (_.get(module, 'package.name', '') === 'coveralls') {
+        return true;
+      }
+
+      return false;
+    }).map(module => {
+      return module.package.name;
+    }).sort();
+
+    let item = _.pull(Object.keys(results), '__unrequireable');
+    if (results.__unrequireable) {
+      item = item.concat(results.__unrequireable).sort();
+    }
+    const values = _.isEqual(item, expected);
+
+    t.true(values, 'Expected results are the same');
+  });
+});
+
+test('is - String (found, unrequireable)', t => {
+  return new ModuleFilter(modules, 'name').is('jsdoc').then(results => {
+    const expected = nodeModules.filter(module => {
+      if (_.get(module, 'package.name', '') === 'jsdoc') {
+        return true;
+      }
+
+      return false;
+    }).map(module => {
+      return module.package.name;
+    }).sort();
+
+    const values = _.isEqual(results.__unrequireable, expected);
+
+    t.true(Object.keys(results).length === 1, 'Only unrequireable modules');
+    t.true(values, 'Expected results are the same');
+  });
+});
 
 // //////////////////////////////
 // // Is Not Equal To
 // //////////////////////////////
-// test.skip('isNotSync - String (not found)', t => {
-//   const results = new ModuleFilter(modules, 'name').isNotSync('over');
-//   t.is(Object.keys(results).length, 8);
-//   t.is(Object.keys(results), ['ava', 'bluebird', 'coveralls', 'eslint', '__unrequireable', 'eslint-config-xo-space', 'nyc', 'tap-diff']);
-// });
+test('isNotSync - String (not found)', t => {
+  const results = new ModuleFilter(modules, 'name').isNotSync('foo-bar-baz');
 
-// test.skip('isNotSync - String (found)', t => {
-//   const results = new ModuleFilter(modules, 'name').isNotSync('coveralls');
-//   t.is(Object.keys(results).length, 7);
-//   t.is(Object.keys(results).length, 7);
-//   t.is(Object.keys(results), ['ava', 'bluebird', 'eslint', '__unrequireable', 'eslint-config-xo-space', 'nyc', 'tap-diff']);
-// });
+  const expected = nodeModules.filter(module => {
+    if (_.get(module, 'package.name', '') !== 'foo-bar-baz') {
+      return true;
+    }
 
-// test.skip('isNotSync - String (found, unrequireable)', t => {
-//   const results = new ModuleFilter(modules, 'name').isNotSync('jsdoc');
-//   t.is(Object.keys(results).length, 7);
-//   t.is(Object.keys(results), ['ava', 'bluebird', 'coveralls', 'eslint', 'eslint-config-xo-space', 'nyc', 'tap-diff']);
-// });
+    return false;
+  }).map(module => {
+    return module.package.name;
+  }).sort();
 
-// test.skip('isNot - String (not found)', t => {
-//   return new ModuleFilter(modules, 'name').isNot('over').then(results => {
-//     t.is(Object.keys(results).length, 8);
-//     t.is(Object.keys(results), ['ava', 'bluebird', 'coveralls', 'eslint', '__unrequireable', 'eslint-config-xo-space', 'nyc', 'tap-diff']);
-//   });
-// });
+  let item = _.pull(Object.keys(results), '__unrequireable');
+  if (results.__unrequireable) {
+    item = item.concat(results.__unrequireable).sort();
+  }
+  const values = _.isEqual(item, expected);
 
-// test.skip('isNot - String (found)', t => {
-//   return new ModuleFilter(modules, 'name').isNot('coveralls').then(results => {
-//     t.is(Object.keys(results).length, 7);
-//     t.is(Object.keys(results), ['ava', 'bluebird', 'eslint', '__unrequireable', 'eslint-config-xo-space', 'nyc', 'tap-diff']);
-//   });
-// });
+  t.true(values, 'Expected results are the same');
+});
 
-// test.skip('isNot - String (found, unrequireable)', t => {
-//   return new ModuleFilter(modules, 'name').isNot('jsdoc').then(results => {
-//     t.is(Object.keys(results).length, 7);
-//     t.is(Object.keys(results), ['ava', 'bluebird', 'coveralls', 'eslint', 'eslint-config-xo-space', 'nyc', 'tap-diff']);
-//   });
-// });
+test('isNotSync - String (found)', t => {
+  const results = new ModuleFilter(modules, 'name').isNotSync('coveralls');
+
+  const expected = nodeModules.filter(module => {
+    if (_.get(module, 'package.name', '') !== 'coveralls') {
+      return true;
+    }
+
+    return false;
+  }).map(module => {
+    return module.package.name;
+  }).sort();
+
+  let item = _.pull(Object.keys(results), '__unrequireable');
+  if (results.__unrequireable) {
+    item = item.concat(results.__unrequireable).sort();
+  }
+  const values = _.isEqual(item, expected);
+
+  t.true(values, 'Expected results are the same');
+});
+
+test('isNotSync - String (found, unrequireable)', t => {
+  const results = new ModuleFilter(modules, 'name').isNotSync('jsdoc');
+
+  if (results.hasOwnProperty('__unrequireable') && Array.isArray(results.__unrequireable)) {
+    const unreq = results.__unrequireable.indexOf('jsdoc') < 0;
+
+    t.true(unreq, 'JSDoc not in unrequireable');
+  }
+  else {
+    t.pass('No unrequireable modules');
+  }
+});
+
+test('isNot - String (not found)', t => {
+  return new ModuleFilter(modules, 'name').isNot('foo-bar-baz').then(results => {
+    const expected = nodeModules.filter(module => {
+      if (_.get(module, 'package.name', '') !== 'foo-bar-baz') {
+        return true;
+      }
+
+      return false;
+    }).map(module => {
+      return module.package.name;
+    }).sort();
+
+    let item = _.pull(Object.keys(results), '__unrequireable');
+    if (results.__unrequireable) {
+      item = item.concat(results.__unrequireable).sort();
+    }
+    const values = _.isEqual(item, expected);
+
+    t.true(values, 'Expected results are the same');
+  });
+});
+
+test('isNot - String (found)', t => {
+  return new ModuleFilter(modules, 'name').isNot('coveralls').then(results => {
+    const expected = nodeModules.filter(module => {
+      if (_.get(module, 'package.name', '') !== 'coveralls') {
+        return true;
+      }
+
+      return false;
+    }).map(module => {
+      return module.package.name;
+    }).sort();
+
+    let item = _.pull(Object.keys(results), '__unrequireable');
+    if (results.__unrequireable) {
+      item = item.concat(results.__unrequireable).sort();
+    }
+    const values = _.isEqual(item, expected);
+
+    t.true(values, 'Expected results are the same');
+  });
+});
+
+test('isNot - String (found, unrequireable)', t => {
+  return new ModuleFilter(modules, 'name').isNot('jsdoc').then(results => {
+    if (results.hasOwnProperty('__unrequireable') && Array.isArray(results.__unrequireable)) {
+      const unreq = results.__unrequireable.indexOf('jsdoc') < 0;
+
+      t.true(unreq, 'JSDoc not in unrequireable');
+    }
+    else {
+      t.pass('No unrequireable modules');
+    }
+  });
+});
