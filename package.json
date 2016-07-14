@@ -4,6 +4,7 @@
   "description": "Dynamic plugin loader",
   "main": "index.js",
   "scripts": {
+    "pretest": "npm run lint",
     "test": "npm ru nyc",
     "coveralls": "nyc report --reporter=text-lcov | coveralls",
     "ava": "ava | tap-diff",
@@ -25,8 +26,8 @@
     "ava": "^0.15.2",
     "bluebird": "^3.1.5",
     "coveralls": "^2.11.6",
-    "eslint": "^1.10.3",
-    "eslint-config-xo-space": "^0.8.0",
+    "eslint": "^3.0.1",
+    "eslint-config-punchcard": "^1.0.1",
     "jsdoc": "^3.4.0",
     "nyc": "^6.6.1",
     "tap-diff": "^0.1.1"
