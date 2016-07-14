@@ -5,7 +5,7 @@
   "main": "index.js",
   "scripts": {
     "pretest": "npm run lint",
-    "test": "npm ru nyc",
+    "test": "npm run nyc",
     "coveralls": "nyc report --reporter=text-lcov | coveralls",
     "ava": "ava | tap-diff",
     "nyc": "nyc --all npm run ava",
