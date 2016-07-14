@@ -4,8 +4,11 @@
   "description": "Dynamic plugin loader",
   "main": "index.js",
   "scripts": {
-    "test": "nyc ava --tap --fail-fast tests/meta.js | tap-diff",
+    "test": "npm ru nyc",
     "coveralls": "nyc report --reporter=text-lcov | coveralls",
+    "ava": "ava | tap-diff",
+    "nyc": "nyc --all npm run ava",
+    "lint": "eslint index.js lib && eslint -c ./.eslintrc-ava.yml tests",
     "jsdoc": "jsdoc -c .jsdoc.json"
   },
   "repository": {
@@ -19,14 +22,37 @@
   "author": "Sam Richard <snugug@us.ibm.com>",
   "license": "MIT",
   "devDependencies": {
-    "ava": "^0.10.0",
+    "ava": "^0.15.2",
     "bluebird": "^3.1.5",
     "coveralls": "^2.11.6",
     "eslint": "^1.10.3",
     "eslint-config-xo-space": "^0.8.0",
     "jsdoc": "^3.4.0",
-    "lodash": "^4.13.1",
-    "nyc": "^5.3.0",
+    "nyc": "^6.6.1",
     "tap-diff": "^0.1.1"
+  },
+  "nyc": {
+    "exclude": [
+      "tests/**/*"
+    ]
+  },
+  "ava": {
+    "files": [
+      "tests/*.js"
+    ],
+    "failFast": true,
+    "tap": true
+  },
+  "config": {
+    "ghooks": {
+      "commit-msg": "punchcard-commit-msg"
+    }
+  },
+  "release": {
+    "analyzeCommits": "punchcard-semantic-release/analyze",
+    "generateNotes": "punchcard-semantic-release/notes"
+  },
+  "dependencies": {
+    "lodash": "^4.13.1"
   }
 }
