@@ -4,11 +4,16 @@ node_js:
   - v5
   - v4
 
+before_script:
+  - npm prune
 
-after_success: npm run coveralls
+after_success:
+  - npm run coverage
+  - npm run semantic-release
 
 branches:
   except:
+    - /^v\d+\.\d+\.\d+$/
     - gh-pages
 
 # deploy:
