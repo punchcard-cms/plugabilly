@@ -1,17 +1,30 @@
+sudo: false
+
 language: node_js
 node_js:
+  - v6
   - v5
   - v4
-before_install: npm install -g npm@3.5.3
-after_success: npm run coveralls
+
+cache:
+  directories:
+    - node_modules
+
+before_script:
+  - npm prune
+
+after_success:
+  - npm run coverage
+  - npm run semantic-release
 
 branches:
   except:
+    - /^v\d+\.\d+\.\d+$/
     - gh-pages
 
-deploy:
-  skip_cleanup: true
-  provider: script
-  script: sh ./.deploy.sh
-  on:
-    branch: master
+# deploy:
+#   skip_cleanup: true
+#   provider: script
+#   script: sh ./.deploy.sh
+#   on:
+#     branch: master

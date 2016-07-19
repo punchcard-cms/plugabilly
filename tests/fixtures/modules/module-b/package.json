@@ -1,0 +1,13 @@
+{
+  "name": "module-b",
+  "version": "0.0.1",
+  "description": "Module B",
+  "main": "index.js",
+  "keywords": [
+    "plugabilly-test",
+    "runner",
+    "over"
+  ],
+  "author": "Scott Nath <github@scottnath.com>",
+  "license": "MIT"
+}

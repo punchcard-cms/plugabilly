@@ -1,4 +1,4 @@
-# Plugabilly [![Build Status](https://travis-ci.org/Snugug/plugabilly.svg?branch=master)](https://travis-ci.org/Snugug/plugabilly) [![Coverage Status](https://coveralls.io/repos/github/Snugug/plugabilly/badge.svg?branch=master)](https://coveralls.io/github/Snugug/plugabilly?branch=master)
+# Plugabilly [![Build Status](https://travis-ci.org/punchcard-cms/plugabilly.svg?branch=master)](https://travis-ci.org/punchcard-cms/plugabilly) [![Coverage Status](https://coveralls.io/repos/github/punchcard-cms/plugabilly/badge.svg?branch=master)](https://coveralls.io/github/punchcard-cms/plugabilly?branch=master)
 
 ![Pugabilly](https://cdn.rawgit.com/Snugug/plugabilly/dd9a7e3dd8fbfc3ffbbefa450e9aba50b07c6334/pugabilly.svg)
 

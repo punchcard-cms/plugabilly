@@ -1,0 +1,11 @@
+{
+  "name": "module-c",
+  "version": "0.0.1",
+  "description": "Module C",
+  "main": "index.js",
+  "keywords": [
+    "plugabilly-fest"
+  ],
+  "author": "Scott Nath <github@scottnath.com>",
+  "license": "MIT"
+}

@@ -1,0 +1,11 @@
+{
+  "name": "module-a",
+  "version": "0.0.1",
+  "description": "Module A",
+  "main": "app.js",
+  "keywords": [
+    "plugabilly-test"
+  ],
+  "author": "Scott Nath <github@scottnath.com>",
+  "license": "MIT"
+}
